@@ -195,7 +195,7 @@
         water, changes = trap(elev_map)
         
         # Add water to the matrix according to the required changes
-        changed_matrix = addwater(downfill(matrix), changes)
+        changed_matrix = addwater(matrix, changes)
         
         # Set the output text to display the elevation map, the amount of water, and the changed matrix
         output_text = str(elev_map) + "\n" + str(water) + " water" + "\n" + str(changed_matrix)
