@@ -29,7 +29,7 @@ Your wordle score ?/6
 ```
 
 
-The above example wordle score translates into the following elevation map and "traps" 7 units of rain water.
+we can imagine  the following elevation map and determine that it "traps" 7 units of rain water.
 ```
 [3, 0, 2, 0, 4]
 7 water
@@ -39,7 +39,7 @@ The above example wordle score translates into the following elevation map and "
 🟩🟦🟩🟦🟩
 🟩🟦🟩🟦🟩
 ```
-
+neat!
 
 ## Thanks
 * https://leetcode.com/problems/trapping-rain-water/
