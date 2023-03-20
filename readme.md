@@ -3,13 +3,9 @@
 I wanted to learn pyscript, so I made this. It seems to work!
 
 ## What?
-See the following classic leetcode problem:
+See the following [classic leetcode problem](https://leetcode.com/problems/trapping-rain-water/):
 
 Given `n` non-negative integers representing an elevation map where the width of each bar is `1`, compute how much water it can trap after raining.
-
-[Link to the original problem](https://leetcode.com/problems/trapping-rain-water/)
-
-**Example 1**
 
 ![rainwatertrap](https://user-images.githubusercontent.com/61806500/190046292-fc841270-b48c-4834-a09a-67e72cb42dc3.png)
 
