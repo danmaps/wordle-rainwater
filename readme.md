@@ -48,6 +48,6 @@ The above example wordle score translates into the following elevation map and "
 ## Thanks
 * https://leetcode.com/problems/trapping-rain-water/
 * https://jeff.glass/post/pyscript-why-create-proxy/
-* https://www.powerlanguage.co.uk/wordle/
+* https://www.nytimes.com/games/wordle/index.html
 * https://www.techiedelight.com/trapping-rain-water-within-given-set-bars/
 * https://github.com/tarmo888/Wordle2Townscaper
