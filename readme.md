@@ -42,6 +42,7 @@ we can imagine  the following elevation map and determine that it "traps" 7 unit
 neat!
 
 ## Thanks
+* https://docs.pyscript.net/latest/tutorials/getting-started.html
 * https://leetcode.com/problems/trapping-rain-water/
 * https://jeff.glass/post/pyscript-why-create-proxy/
 * https://www.nytimes.com/games/wordle/index.html
