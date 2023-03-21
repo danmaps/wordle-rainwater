@@ -1,5 +1,3 @@
-# Wordle to rain water
-
 I wanted to learn pyscript, so I made this. It seems to work!
 
 ## What?
