@@ -90,9 +90,11 @@
         # parse the puzzle from the input text
         for n, line in enumerate(puzzle_lines):
             for m, c in enumerate(line):
-                if c != "⬛":
-                    # if the character is not black, set the corresponding cell to 1
+                if c == "🟩":
+                    # if the character is green, set the corresponding cell to 1
                     puzzle[n][m] = 1
+                elif c == "🟨":
+                    puzzle[n][m] = 2
 
         # for line in puzzle:
         #     print(line)
@@ -107,7 +109,7 @@
         for col in range(len(puzzle[0])):
             # iterate from the top row to the bottom row
             for row in range(len(puzzle)):
-                if puzzle[row][col] == 1:
+                if puzzle[row][col] != 0:
                     # if the cell is not black, add the height of the cell to the elevation map
                     elevation_map.append(len(puzzle) - row)
                     break
@@ -121,7 +123,7 @@
 
     def list_to_icons(lst):
         # Define a dictionary to map numbers to icons
-        icons = {0: "⬛", 1: "🟩", 2: "🟦"}
+        icons = {0: "⬛", 1: "🟩", 2: "🟨", 3: "🟦"}
         # Initialize an empty string to store the output
         output = ""
         # Loop through each sublist in the list
@@ -139,13 +141,17 @@
     def downfill(m):
         new_matrix = [row[:] for row in m]
 
-        # fill each column with 1s below the first 1
+        # fill each column with 1s below the first non-zero
         for i in range(len(new_matrix[0])):
             column = [new_matrix[j][i] for j in range(len(new_matrix))]
             if 1 in column:
                 first_one_index = column.index(1)
                 for j in range(first_one_index + 1, len(new_matrix)):
                     new_matrix[j][i] = 1
+            if 2 in column:
+                first_two_index = column.index(2)
+                for j in range(first_two_index + 1, len(new_matrix)):
+                    new_matrix[j][i] = 2
 
         return new_matrix
 
@@ -175,7 +181,7 @@
                 if num_zeros == 0:
                     break
                 if matrix[i][col] == 0:
-                    matrix[i][col] = 2
+                    matrix[i][col] = 3
                     num_zeros -= 1
 
         # for row in matrix:
