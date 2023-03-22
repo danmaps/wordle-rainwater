@@ -9,9 +9,9 @@
     <a href="https://github.com/danmaps/wordle-rainwater" target="_blank" class="github-corner fixed-top" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; left: 0; transform: scale(-1, 1);" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style></a>
     <div class="container">
     	<div class="row justify-content-center mt-5 mt-md-0">
-        <div class="col-lg-4 col-md-6">
+        <div class="col col-md-6">
             <h3 class="mt-4">How much <a href="https://leetcode.com/problems/trapping-rain-water/" target="_blank">rain water</a> would a <a href="https://www.nytimes.com/games/wordle/" target="_blank">wordle</a> score trap?</h1>
-            <textarea type="textarea" id="userinput" cols="20" rows="9">Your wordle score ?/6
+            <textarea type="textarea" id="userinput" cols="20" rows="9">Wordle ??? ?/6
     
 ⬛⬛⬛⬛⬛
 ⬛⬛⬛⬛🟩
@@ -27,196 +27,198 @@
     </div>
 
     <py-script>
-    from js import console, document
-    from pyodide.ffi.wrappers import (
-        add_event_listener,
-    )  # https://jeff.glass/post/pyscript-why-create-proxy/
+import sys
+from js import console, document
+from pyodide.ffi.wrappers import add_event_listener
+# https://jeff.glass/post/pyscript-why-create-proxy/
 
-    import sys
+# Function to find the amount of water that can be trapped within
+# a given set of bars in linear time and extra space
+# https://www.techiedelight.com/trapping-rain-water-within-given-set-bars/
+def trap(bars):
 
-    # Function to find the amount of water that can be trapped within
-    # a given set of bars in linear time and extra space
-    # https://www.techiedelight.com/trapping-rain-water-within-given-set-bars/
-    def trap(bars):
+    changes = []
 
-        changes = []
+    n = len(bars)
+    if n <= 2:
+        return 0
 
-        n = len(bars)
-        if n <= 2:
-            return 0
+    water = 0
 
-        water = 0
+    # `left[i]` stores the maximum height of a bar to the left
+    # of the current bar
+    left = [None] * (n - 1)
+    left[0] = -sys.maxsize
 
-        # `left[i]` stores the maximum height of a bar to the left
-        # of the current bar
-        left = [None] * (n - 1)
-        left[0] = -sys.maxsize
+    # process bars from left to right
+    for i in range(1, n - 1):
+        left[i] = max(left[i - 1], bars[i - 1])
 
-        # process bars from left to right
-        for i in range(1, n - 1):
-            left[i] = max(left[i - 1], bars[i - 1])
+    # `right` stores the maximum height of a bar to the right
+    # of the current bar
+    right = -sys.maxsize
 
-        # `right` stores the maximum height of a bar to the right
-        # of the current bar
-        right = -sys.maxsize
+    # process bars from right to left
+    for i in reversed(range(1, n - 1)):
+        right = max(right, bars[i + 1])
 
-        # process bars from right to left
-        for i in reversed(range(1, n - 1)):
-            right = max(right, bars[i + 1])
+        # check if it is possible to store water in the current bar
+        if min(left[i], right) > bars[i]:
+            water += min(left[i], right) - bars[i]
+            console.log(f"add {min(left[i], right) - bars[i]} water to column {i}")
+            changes.append((i, min(left[i], right) - bars[i]))
+            # print(changes)
 
-            # check if it is possible to store water in the current bar
-            if min(left[i], right) > bars[i]:
-                water += min(left[i], right) - bars[i]
-                console.log(f"add {min(left[i], right) - bars[i]} water to column {i}")
-                changes.append((i, min(left[i], right) - bars[i]))
-                # print(changes)
-
-        return water, changes
+    return water, changes
 
 
-    def wordle_to_matrix(input_text):
-        """takes a copied wordle score and returns a list of lists of 1s and 0s"""
-        # split the input text into lines
-        lines = input_text.split("\n")
+def wordle_to_matrix(input_text):
+    """takes a copied wordle score and returns a list of lists of 1s and 0s"""
+    # split the input text into lines
+    lines = input_text.split("\n")
 
-        # extract the dimensions of the puzzle
-        puzzle_lines = lines[2:]
-        rows = len(puzzle_lines)
-        cols = len(puzzle_lines[0])
+    # extract the dimensions of the puzzle
+    puzzle_lines = lines[2:]
+    rows = len(puzzle_lines)
+    cols = len(puzzle_lines[0])
 
-        # initialize 0s matrix
-        puzzle = [[0 for _ in range(cols)] for _ in range(rows)]
+    # initialize 0s matrix
+    puzzle = [[0 for _ in range(cols)] for _ in range(rows)]
 
-        # parse the puzzle from the input text
-        for n, line in enumerate(puzzle_lines):
-            for m, c in enumerate(line):
-                if c == "🟩":
-                    # if the character is green, set the corresponding cell to 1
-                    puzzle[n][m] = 1
-                elif c == "🟨":
-                    puzzle[n][m] = 2
+    # parse the puzzle from the input text
+    for n, line in enumerate(puzzle_lines):
+        for m, c in enumerate(line):
+            if c == "🟩":
+                # if the character is green, set the corresponding cell to 1
+                puzzle[n][m] = 1
+            elif c == "🟨":
+                puzzle[n][m] = 2
 
-        # for line in puzzle:
-        #     print(line)
-        return puzzle
-
-
-    def to_elevation_map(puzzle):
-        """takes a puzzle matrix and returns a list of heights"""
-        elevation_map = []
-
-        # for each column in the puzzle
-        for col in range(len(puzzle[0])):
-            # iterate from the top row to the bottom row
-            for row in range(len(puzzle)):
-                if puzzle[row][col] != 0:
-                    # if the cell is not black, add the height of the cell to the elevation map
-                    elevation_map.append(len(puzzle) - row)
-                    break
-            else:
-                # if the column is entirely black, add a height of 0 to the elevation map
-                elevation_map.append(0)
-
-        # return the elevation map as a list of heights
-        return elevation_map
+    # for line in puzzle:
+    #     print(line)
+    return puzzle
 
 
-    def list_to_icons(lst):
-        # Define a dictionary to map numbers to icons
-        icons = {0: "⬛", 1: "🟩", 2: "🟨", 3: "🟦"}
-        # Initialize an empty string to store the output
-        output = ""
-        # Loop through each sublist in the list
-        for sublist in lst:
-            # Loop through each number in the sublist
-            for num in sublist:
-                # Append the corresponding icon to the output
-                output += icons[num]
-            # Append a newline character to the output
-            output += "\n"
-        # Return the output string
-        return output
+def to_elevation_map(puzzle):
+    """takes a puzzle matrix and returns a list of heights"""
+    elevation_map = []
+
+    # for each column in the puzzle
+    for col in range(len(puzzle[0])):
+        # iterate from the top row to the bottom row
+        for row in range(len(puzzle)):
+            if puzzle[row][col] != 0:
+                # if the cell is not black, add the height of the cell to the elevation map
+                elevation_map.append(len(puzzle) - row)
+                break
+        else:
+            # if the column is entirely black, add a height of 0 to the elevation map
+            elevation_map.append(0)
+
+    # return the elevation map as a list of heights
+    return elevation_map
 
 
-    def downfill(m):
-        new_matrix = [row[:] for row in m]
-
-        # fill each column with 1s below the first non-zero
-        for i in range(len(new_matrix[0])):
-            column = [new_matrix[j][i] for j in range(len(new_matrix))]
-            if 1 in column:
-                first_one_index = column.index(1)
-                for j in range(first_one_index + 1, len(new_matrix)):
-                    new_matrix[j][i] = 1
-            if 2 in column:
-                first_two_index = column.index(2)
-                for j in range(first_two_index + 1, len(new_matrix)):
-                    new_matrix[j][i] = 2
-
-        return new_matrix
-
-
-    def addwater(matrix, changes):
-        """replace the correct chars in wordle_array(message) with "🟦"
-        using changes like this [(3, 3), (2, 1), (1, 3)]
-
-        [0, 0, 0, 0, 0]
-        [0, 0, 0, 0, 1]
-        [1, 0, 0, 0, 1]
-        [1, 0, 1, 0, 1]
-        [1, 0, 1, 0, 1]
-
-        ->
-
-        [0, 0, 0, 0, 0]
-        [0, 0, 0, 0, 1]
-        [1, 2, 2, 2, 1]
-        [1, 2, 1, 2, 1]
-        [1, 2, 1, 2, 1]
-        """
-
-        # Apply changes to the matrix
-        for col, num_zeros in changes:
-            for i in range(len(matrix) - 1, -1, -1):
-                if num_zeros == 0:
-                    break
-                if matrix[i][col] == 0:
-                    matrix[i][col] = 3
-                    num_zeros -= 1
-
-        # for row in matrix:
-        #     print(row)
-
-        return list_to_icons(matrix)
+def list_to_icons(lst):
+    # Define a dictionary to map numbers to icons
+    icons = {0: "⬛", 1: "🟩", 2: "🟨", 3: "🟦"}
+    # Initialize an empty string to store the output
+    output = ""
+    # Loop through each sublist in the list
+    for sublist in lst:
+        # Loop through each number in the sublist
+        for num in sublist:
+            # Append the corresponding icon to the output
+            output += icons[num]
+        # Append a newline character to the output
+        output += "\n"
+    # Return the output string
+    return output
 
 
-    def run_it(*args):
-        # Get the user input
-        message = document.getElementById("userinput").value
-        console.log(message)
+def downfill(m):
+    new_matrix = [row[:] for row in m]
 
-        # Create the output element
-        output = Element("output")
+    # fill each column with 1s below the first non-zero
+    for i in range(len(new_matrix[0])):
+        column = [new_matrix[j][i] for j in range(len(new_matrix))]
+        if 1 in column:
+            first_one_index = column.index(1)
+            for j in range(first_one_index + 1, len(new_matrix)):
+                new_matrix[j][i] = 1
+        if 2 in column:
+            first_two_index = column.index(2)
+            for j in range(first_two_index + 1, len(new_matrix)):
+                new_matrix[j][i] = 2
 
-        # Convert the input message to a matrix of elevation values
-        matrix = wordle_to_matrix(message)
-        elev_map = to_elevation_map(matrix)
-
-        # Compute the amount of water that can be trapped and the required changes
-        water, changes = trap(elev_map)
-
-        # Add water to the matrix according to the required changes
-        changed_matrix = addwater(downfill(matrix), changes)
-
-        # Set the output text to display the elevation map, the amount of water, and the changed matrix
-        output_text = (
-            str(elev_map) + "\n" + str(water) + " water" + "\n" + str(changed_matrix)
-        )
-        output.element.innerText = output_text
+    return new_matrix
 
 
-    add_event_listener(document.getElementById("btn"), "click", run_it)
-    add_event_listener(document.getElementById("userinput"), "submit", run_it)
+def addwater(matrix, changes):
+    """replace the correct chars in wordle_array(message) with "🟦"
+    using changes like this [(3, 3), (2, 1), (1, 3)]
+
+    [0, 0, 0, 0, 0]
+    [0, 0, 0, 0, 1]
+    [1, 0, 0, 0, 1]
+    [1, 0, 1, 0, 1]
+    [1, 0, 1, 0, 1]
+
+    ->
+
+    [0, 0, 0, 0, 0]
+    [0, 0, 0, 0, 1]
+    [1, 2, 2, 2, 1]
+    [1, 2, 1, 2, 1]
+    [1, 2, 1, 2, 1]
+    """
+
+    # Apply changes to the matrix
+    for col, num_zeros in changes:
+        for i in range(len(matrix) - 1, -1, -1):
+            if num_zeros == 0:
+                break
+            if matrix[i][col] == 0:
+                matrix[i][col] = 3
+                num_zeros -= 1
+
+    # for row in matrix:
+    #     print(row)
+
+    return list_to_icons(matrix)
+
+
+def run_it(*args):
+
+    # Get the user input
+    message = document.getElementById("userinput").value
+    console.log(message)
+
+    # Create the output element
+    output = Element("output")
+
+    # Convert the input message to a matrix of elevation values
+    matrix = wordle_to_matrix(message)
+    elev_map = to_elevation_map(matrix)
+
+    # Compute the amount of water that can be trapped and the required changes
+    water, changes = trap(elev_map)
+
+    # Add water to the matrix according to the required changes
+    changed_matrix = addwater(downfill(matrix), changes)
+
+    # Set the output text to display the elevation map, the amount of water, and the changed matrix
+    output_text = (
+        "\n" + str(changed_matrix) + "\n" + str(water) + " units of water"
+    )
+
+    output.element.innerText = output_text
+
+    # document.getElementById("userinput").innerText = changed_matrix
+
+add_event_listener(document.getElementById("btn"), "click", run_it)
+add_event_listener(document.getElementById("userinput"), "submit", run_it)
+
 
 
     </py-script>
