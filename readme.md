@@ -21,15 +21,12 @@ After looking at wordle scores, _every single day_, I started to wonder if/how I
 
 Given the following wordle score:
 ```
-Your wordle score ?/6
-   
 ⬛⬛⬛⬛⬛
 ⬛⬛⬛⬛🟩
 🟩⬛⬛⬛🟩
 🟩⬛🟩⬛🟩
 🟩⬛🟩⬛🟩
 ```
-
 
 we can imagine  the following elevation map and determine that it "traps" 7 units of rain water.
 ```
@@ -41,8 +38,6 @@ we can imagine  the following elevation map and determine that it "traps" 7 unit
 🟩🟦🟩🟦🟩
 🟩🟦🟩🟦🟩
 ```
-neat!
-
 ## How does it work?
 This project uses pyscript to create a very simple web app that takes a Wordle score as input and displays the corresponding elevation map and water count as output. It also uses some logic from [this article](https://www.techiedelight.com/trapping-rain-water-within-given-set-bars/) to solve the rainwater trapping problem.
 
