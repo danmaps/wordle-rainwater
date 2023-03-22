@@ -89,9 +89,10 @@ def wordle_to_matrix(input_text):
     for n, line in enumerate(puzzle_lines):
         for m, c in enumerate(line):
             if c == "🟩":
-                # if the character is green, set the corresponding cell to 1
+                # if the character is green, set the cell to 1
                 puzzle[n][m] = 1
             elif c == "🟨":
+                # if the character is yellow, set the cell to 2
                 puzzle[n][m] = 2
 
     # for line in puzzle:
@@ -119,20 +120,13 @@ def to_elevation_map(puzzle):
     return elevation_map
 
 
-def list_to_icons(lst):
-    # Define a dictionary to map numbers to icons
+def matrix_to_icons(lst):
     icons = {0: "⬛", 1: "🟩", 2: "🟨", 3: "🟦"}
-    # Initialize an empty string to store the output
     output = ""
-    # Loop through each sublist in the list
     for sublist in lst:
-        # Loop through each number in the sublist
         for num in sublist:
-            # Append the corresponding icon to the output
             output += icons[num]
-        # Append a newline character to the output
         output += "\n"
-    # Return the output string
     return output
 
 def fill_zeros(column, value):
@@ -156,24 +150,6 @@ def downfill(m):
     return filled_matrix
 
 def addwater(matrix, changes):
-    """replace the correct chars in wordle_array(message) with "🟦"
-    using changes like this [(3, 3), (2, 1), (1, 3)]
-
-    [0, 0, 0, 0, 0]
-    [0, 0, 0, 0, 1]
-    [1, 0, 0, 0, 1]
-    [1, 0, 1, 0, 1]
-    [1, 0, 1, 0, 1]
-
-    ->
-
-    [0, 0, 0, 0, 0]
-    [0, 0, 0, 0, 1]
-    [1, 2, 2, 2, 1]
-    [1, 2, 1, 2, 1]
-    [1, 2, 1, 2, 1]
-    """
-
     # Apply changes to the matrix
     for col, num_zeros in changes:
         for i in range(len(matrix) - 1, -1, -1):
@@ -183,10 +159,7 @@ def addwater(matrix, changes):
                 matrix[i][col] = 3
                 num_zeros -= 1
 
-    # for row in matrix:
-    #     print(row)
-
-    return list_to_icons(matrix)
+    return matrix_to_icons(matrix)
 
 
 def run_it(*args):
