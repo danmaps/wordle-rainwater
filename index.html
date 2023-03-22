@@ -135,26 +135,25 @@ def list_to_icons(lst):
     # Return the output string
     return output
 
+def fill_zeros(column, value):
+    if value in column:
+        first_index = column.index(value) 
+        for i in range(first_index + 1, len(column)): 
+            if column[i] == 0 and column[i-1] == value: 
+                column[i] = value 
+    return column 
 
 def downfill(m):
-    new_matrix = [row[:] for row in m]
+    filled_matrix = [row[:] for row in m]
 
-    # fill each column with 1s below the first non-zero
-    for i in range(len(new_matrix[0])):
-        column = [new_matrix[j][i] for j in range(len(new_matrix))]
-        if 1 in column:
-            first_one_index = column.index(1)
-            for j in range(first_one_index + 1, len(new_matrix)):
-                if new_matrix[j][i] == 0:
-                    new_matrix[j][i] = 1
-        if 2 in column:
-            first_two_index = column.index(2)
-            for j in range(first_two_index + 1, len(new_matrix)):
-                if new_matrix[j][i] == 0:
-                    new_matrix[j][i] = 2
+    for i in range(len(filled_matrix[0])):
+        column = [filled_matrix[j][i] for j in range(len(filled_matrix))]
+        column = fill_zeros(column, 1) # fill zeros below 1
+        column = fill_zeros(column, 2) # fill zeros below 2
+        for j in range(len(filled_matrix)):
+            filled_matrix[j][i] = column[j] # update the matrix with the modified column
 
-    return new_matrix
-
+    return filled_matrix
 
 def addwater(matrix, changes):
     """replace the correct chars in wordle_array(message) with "🟦"
