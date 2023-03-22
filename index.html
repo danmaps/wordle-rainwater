@@ -145,11 +145,13 @@ def downfill(m):
         if 1 in column:
             first_one_index = column.index(1)
             for j in range(first_one_index + 1, len(new_matrix)):
-                new_matrix[j][i] = 1
+                if new_matrix[j][i] == 0:
+                    new_matrix[j][i] = 1
         if 2 in column:
             first_two_index = column.index(2)
             for j in range(first_two_index + 1, len(new_matrix)):
-                new_matrix[j][i] = 2
+                if new_matrix[j][i] == 0:
+                    new_matrix[j][i] = 2
 
     return new_matrix
 
