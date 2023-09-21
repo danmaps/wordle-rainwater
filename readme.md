@@ -41,7 +41,7 @@ we can imagine  the following elevation map and determine that it "traps" 7 unit
 ## How does it work?
 This project uses pyscript to create a very simple web app that takes a Wordle score as input and displays the corresponding elevation map and water count as output. It also uses some logic from [this article](https://www.techiedelight.com/trapping-rain-water-within-given-set-bars/) to solve the rainwater trapping problem.
 
-Play with it [here](https://danmaps.github.io/wordle-rainwater/).
+Play with it on [github.io](https://danmaps.github.io/wordle-rainwater/) or [pyscriptapps.com](https://danmaps.pyscriptapps.com/wordle-rainwater/latest/).
 
 ## Thanks
 * https://docs.pyscript.net/latest/tutorials/getting-started.html
