@@ -1,5 +1,5 @@
 # [Wordle Rainwater Trapping](https://danmaps.github.io/wordle-rainwater/)
-This is a fun project that combines [Wordle](https://www.nytimes.com/games/wordle/index.html) and the [rainwater trapping problem](https://leetcode.com/problems/trapping-rain-water/). I wanted to learn [pyscript](https://docs.pyscript.net/latest/tutorials/getting-started.html), so I made this. 
+This is a fun project that combines [Wordle](https://www.nytimes.com/games/wordle/index.html) and the [rainwater trapping problem](https://leetcode.com/problems/trapping-rain-water/). I wanted to learn about [pyscript](https://docs.pyscript.net/latest/tutorials/getting-started.html), so I made this. 
 
 ## What is Wordle?
 In case you've been living under a rock, Wordle is a popular word game where you have to guess a five-letter word in six tries. You get feedback on each guess based on how many letters are correct and in the right position (green), correct but in the wrong position (yellow), or incorrect (gray).
