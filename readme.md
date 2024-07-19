@@ -11,9 +11,9 @@ Given `n` non-negative integers representing an elevation map where the width of
 
 ![rainwatertrap](https://user-images.githubusercontent.com/61806500/190046292-fc841270-b48c-4834-a09a-67e72cb42dc3.png)
 
-<b>Input</b>: height = `[0,1,0,2,1,0,1,3,2,1,2,1]`<br>
-<b>Output</b>: `6`<br>
-<b>Explanation</b>: The above elevation map (black section) is represented by array `[0,1,0,2,1,0,1,3,2,1,2,1]`. In this case, `6` units of rain water (blue section) are being trapped.<br>
+**Input**: height = `[0,1,0,2,1,0,1,3,2,1,2,1]`  
+**Output**: `6`  
+**Explanation**: The above elevation map (black section) is represented by array `[0,1,0,2,1,0,1,3,2,1,2,1]`. In this case, `6` units of rain water (blue section) are being trapped.
 
 
 ## How does this project combine Wordle and rainwater trapping?
